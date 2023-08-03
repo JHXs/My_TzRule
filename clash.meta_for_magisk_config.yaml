@@ -1,0 +1,75 @@
+
+proxies:
+
+proxy-providers:
+  
+  机场1:
+    type: http
+    url: "你的订阅地址"
+    path: ./proxy_providers/机场1.yaml
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+  机场2:
+    type: http
+    url: "你的订阅地址"
+    path: ./proxy_providers/机场2.yaml
+    interval: 3600
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+proxy-groups:
+  - name: Proxy
+    type: select
+    proxies:
+      - 机场组1
+      - 机场组2
+  - name: 机场组1
+    type: select
+    use:
+      - 机场1
+  - name: 机场组2
+    type: select
+    use:
+      - 机场2
+  - name: Domestic
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+  - name: Others
+    type: select
+    proxies:
+      - Proxy
+      - Domestic
+
+rule-providers:
+  AD:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml
+    path: ./rule_providers/Ad.yaml
+    interval: 21600
+  Google:
+    type: http
+    behavior: classical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml
+    path: ./rule_providers/Google.yaml
+    interval: 21600
+  Local:
+    type: file
+    behavior: classical
+    path: ./rule_providers/Locale.yaml
+rules:
+  # - PROCESS-NAME,clash,REJECT # 解决回环小妙招
+  - RULE-SET,Local,DIRECT,no-resolve
+  # - RULE-SET,AD,REJECT # 去广告规则，要用，去掉最前面的井号即可
+  - AND,((DST-PORT,5228-5230),(NETWORK,TCP),(DOMAIN-KEYWORD,google)),Domestic
+  - RULE-SET,Google,Proxy
+  - GEOSITE,CN,Domestic
+  - GEOIP,CN,Domestic
+  - MATCH,Proxy
