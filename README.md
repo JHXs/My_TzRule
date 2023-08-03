@@ -1,2 +1,2 @@
-# TZ
+# My_TzRule
 存储自己的特殊配置的Rule Providers 规则集
