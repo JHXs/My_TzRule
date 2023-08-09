@@ -1,4 +1,4 @@
-
+# 自用拦截网站
 DOMAIN-SUFFIX,pornhub.com
 DOMAIN-SUFFIX,xvideos.com
 DOMAIN-SUFFIX,drtuber.com
