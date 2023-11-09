@@ -2,6 +2,7 @@
 # DOMAIN-SUFFIX,events.data.microsoft.com
 # DOMAIN-KEYWORD,events.data.microsoft
 DOMAIN-KEYWORD,bulianglin.com
+DOMAIN-KEYWORD,cdn.winget.microsoft.com
 # 长风网站，自动注入
 DOMAIN-SUFFIX,v2rayse.com
 DOMAIN-SUFFIX,cff.pw
