@@ -9,7 +9,9 @@ DOMAIN-SUFFIX,yihaojichang.xyz
 DOMAIN-SUFFIX,ikunji.me
 DOMAIN-SUFFIX,vultr.com
 DOMAIN-SUFFIX,nodeseek.com
-DST-PORT,22
+"PROCESS-NAME,tailscale.exe"
+"PROCESS-NAME,tailscaled.exe"
+# DST-PORT,22
 # IP-CIDR,192.168.0.0/16
 # IP-CIDR,10.0.0.0/8
 # IP-CIDR,172.16.0.0/12
