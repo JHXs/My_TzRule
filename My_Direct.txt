@@ -8,7 +8,7 @@ DOMAIN-SUFFIX,metacubex.one
 DOMAIN-SUFFIX,yihaojichang.xyz
 DOMAIN-SUFFIX,ikunji.me
 DOMAIN-SUFFIX,vultr.com
-DOMAIN-SUFFIX,nodeseek.com
+# DOMAIN-SUFFIX,nodeseek.com
 PROCESS-NAME,tailscale.exe
 PROCESS-NAME,tailscaled.exe
 IP-CIDR,100.64.0.0/10
