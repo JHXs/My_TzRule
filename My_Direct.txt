@@ -12,9 +12,10 @@ DOMAIN-SUFFIX,vultr.com
 PROCESS-NAME,tailscale.exe
 PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,trim-qbittorrent-nox
-IP-CIDR,100.64.0.0/10
+IP-CIDR,100.64.0.0/10 # tailscale
 IP-CIDR,192.168.1.0/24
 IP-CIDR,172.18.67.0/24
+IP-CIDR,172.17.0.1/24 # docker
 # DST-PORT,22
 # IP-CIDR,192.168.0.0/16
 # IP-CIDR,10.0.0.0/8
