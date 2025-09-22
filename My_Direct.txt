@@ -4,7 +4,6 @@ DOMAIN-KEYWORD,torrent
 DOMAIN-KEYWORD,tracker
 DOMAIN-SUFFIX,smtp
 DOMAIN-SUFFIX,local
-DOMAIN-SUFFIX,metacubex.one
 DOMAIN-SUFFIX,yihaojichang.xyz
 DOMAIN-SUFFIX,ikunji.me
 DOMAIN-SUFFIX,hansel.top
