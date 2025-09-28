@@ -180,60 +180,138 @@ rule-anchor:
 rule-providers:
   # 自己的规则集
   My_Reject:
-    <<: *classical
     url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Reject.txt
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
   My_Direct:
-    <<: *classical
     url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Direct.txt
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
   My_Proxy:
-    <<: *classical
     url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Proxy.txt
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
 
   # domain
   private_domain:
-    <<: *domain
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
   anti-AD:
-    <<: *domain
     url: https://raw.githubusercontent.com/privacy-protection-tools/anti-ad.github.io/master/docs/mihomo.mrs
-  google_scholar: {!!merge <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google-scholar.mrs"}
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+  google_scholar:
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google-scholar.mrs
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
   category-ai-chat-!cn:
-    <<: *domain
     url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-chat-!cn.mrs
-  telegram_domain: {!!merge <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
-  microsoft_domain: {!!merge <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+  telegram_domain:
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+  microsoft_domain:
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
   steam@cn:
-    <<: *domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs
   microsoft@cn:
-    <<: *domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
     url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/microsoft@cn.mrs
   jetbrains@cn:
-    <<: *domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
     url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/jetbrains@cn.mrs
   google@cn:
-    <<: *domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
     url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/google@cn.mrs
   apple@cn:
-    <<: *domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
     url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/apple@cn.mrs
   category-games@cn:
-    <<: *domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
     url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games@cn.mrs
   geolocation-!cn:
-    <<: *domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs
   cn_domain:
-    <<: *domain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs
 
 # ip
   private_ip:
-    <<: *ip
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
     url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs
   cn_ip:
-    <<: *ip
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
     url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs
-  google_ip: {!!merge <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
-  telegram_ip: {!!merge <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
-  netflix_ip: {!!merge <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
+  google_ip:
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+  telegram_ip:
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+  netflix_ip:
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
