@@ -3,6 +3,7 @@
 # DOMAIN-KEYWORD,events.data.microsoft
 DOMAIN-KEYWORD,bulianglin.com
 DOMAIN-KEYWORD,cdn.winget.microsoft.com
+DOMAIN-KEYWORD,googleapis.cn
 DOMAIN,sun.hansel.top # 全域名匹配
 DOMAIN,webdav.hansel.top
 DOMAIN,fnalist.hansel.top
