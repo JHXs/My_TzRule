@@ -1,9 +1,12 @@
-IP-CIDR,100.64.0.0/10 # tailscale
+# tailscale
+IP-CIDR,100.64.0.0/10
 IP-CIDR,192.168.1.0/24
 IP-CIDR,172.18.67.0/24
-IP-CIDR,172.17.0.1/24 # docker
+# docker
+IP-CIDR,172.17.0.1/24
 IP-CIDR,198.41.0.0/16
-SRC-IP-CIDR,172.17.1.3/32 # /32 匹配单个主机，这里来自该 ip 的容器直接直连
+# /32 匹配单个主机，这里来自该 ip 的容器直接直连
+SRC-IP-CIDR,172.17.1.3/32
 # DST-PORT,22
 # IP-CIDR,192.168.0.0/16
 # IP-CIDR,10.0.0.0/8
