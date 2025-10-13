@@ -7,6 +7,7 @@ DOMAIN-SUFFIX,local
 DOMAIN-SUFFIX,yihaojichang.xyz
 DOMAIN-SUFFIX,hansel.top
 DOMAIN-SUFFIX,vultr.com
+DOMAIN-SUFFIX,chatopens.chat
 PROCESS-NAME,tailscale.exe
 PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,trim-qbittorrent-nox
