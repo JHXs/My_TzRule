@@ -5,7 +5,8 @@ DOMAIN-KEYWORD,bulianglin.com
 DOMAIN-KEYWORD,cdn.winget.microsoft.com
 DOMAIN-KEYWORD,googleapis.cn
 DOMAIN-KEYWORD,springer.com
-DOMAIN,sun.hansel.top # 全域名匹配
+DOMAIN,modelstudio.console.aliyun.com # 全域名匹配
+DOMAIN,sun.hansel.top
 DOMAIN,webdav.hansel.top
 DOMAIN,fnalist.hansel.top
 DOMAIN,qbit.hansel.top
