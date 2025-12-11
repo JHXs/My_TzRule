@@ -9,6 +9,8 @@ DOMAIN-SUFFIX,hansel.top
 DOMAIN-SUFFIX,vultr.com
 DOMAIN-SUFFIX,chatopens.chat
 DOMAIN-SUFFIX,kuafuzy.com
+DOMAIN-SUFFIX,agentrouter.org
+DOMAIN-SUFFIX,ranyrouter.top
 PROCESS-NAME,tailscale.exe
 PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,trim-qbittorrent-nox
