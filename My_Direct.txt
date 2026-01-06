@@ -10,7 +10,6 @@ DOMAIN-SUFFIX,vultr.com
 DOMAIN-SUFFIX,chatopens.chat
 DOMAIN-SUFFIX,kuafuzy.com
 DOMAIN-SUFFIX,agentrouter.org
-DOMAIN-SUFFIX,anyrouter.top
 DOMAIN-SUFFIX,giffgaff.com
 PROCESS-NAME,tailscale.exe
 PROCESS-NAME,tailscaled.exe
