@@ -1,0 +1,297 @@
+######### 锚点 start #######
+anchors:
+  # === proxy providers 相关锚点 ===
+  #这里是订阅更新和延迟测试相关的
+  p: &p {type: http, interval: 3600, health-check: {enable: true, url: https://cp.cloudflare.com/generate_204, interval: 300}}
+
+  # 订阅节点覆盖项，代理节点统一从无线网卡发起连接
+  po: &po {interface-name: wlp11s0}
+
+  # === proxy-groups 相关锚点 ===
+  pr: &pr {type: select, proxies: [🚀 节点选择,🏗 自建,🇭🇰 香港,🇭🇰 香港-自建,🇨🇳 台湾,🇯🇵 日本,🇯🇵 日本-自建,🇸🇬 狮城,🇺🇲 美国,🇺🇲 美国-自建,🇰🇷 韩国,其它地区,全部节点,♻️ 自动选择,🎯 全球直连]}
+
+  #=== rule provider 相关锚点 ===
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  classical: &classical {type: http, interval: 86400, behavior: classical, format: text}
+
+######### 锚点 end #######
+
+#----------------------------- 订阅地址配置--------------------#
+# url 里填写自己的订阅,名称不能重复
+# 'xjb' 这种机场的名字可以随便填写，也可以另起一行增加多个机场。只需注意⚠️：修改这里后需要对应修改 `proxy-groups` 策略组配置部分
+proxy-providers:
+  peiqian:
+    <<: *p
+    url: ""
+    override:
+      # <<: *po
+      additional-prefix: "[别名]"
+
+##-----------------------------全局配置------------------------########
+mode: rule
+log-level: info
+mixed-port: 7890
+port: 7891
+socks-port: 7892
+redir-port: 7893
+tproxy-port: 7894
+ipv6: false
+allow-lan: true
+authentication: # http,socks 入口的验证用户名，密码, export ALL_PROXY=socks5://name:password@hostip:port
+  - "ikunji:ikunji"
+unified-delay: true
+tcp-concurrent: true
+
+geodata-mode: true         #【Meta专属】使用geoip.dat数据库(默认：false使用mmdb数据库)
+geodata-loader: standard
+geo-auto-update: false  # 是否自动更新 geodata
+geo-update-interval: 48 # 更新间隔，单位：小时
+geox-url:
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+
+# 控制面板
+external-controller: 0.0.0.0:8090     #控制器监听地址
+secret: "ikunji"                    #控制器登录密码
+# external-ui: "/var/lib/mihomo/ui"   #http服务路径，可以放静态web网页，如yacd的控制面板
+                                    #可通过`http://{{external-controller}}/ui`直接使用
+external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip"
+
+# 匹配进程 always/strict/off
+find-process-mode: strict
+keep-alive-idle: 600
+keep-alive-interval: 30
+
+# 策略组选择和fakeip缓存
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# 流量嗅探
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - "Mijia Cloud"
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
+    - "+.apple.com"
+
+# 代理模式
+tun:
+  # enable: true
+  enable: false
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  # strict-route: true
+  exclude-interface:
+    - "Tailscale"
+
+# DNS模块
+dns:
+  enable: true
+  prefer-h3: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  # enhanced-mode: fake-ip # redir-host/fake-ip
+  fake-ip-range: 28.0.0.1/8
+  # 模式切换 whitelist/blacklist
+  # 黑名单模式表示如果匹配成功则不返回 Fake-IP, 白名单模式时只有匹配成功才返回 Fake-IP
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    # - "*" # 当作 redir-host 模式使用
+    - "+.lan"
+    - "+.local"
+    - "*.msftconnecttest.com"
+  respect-rules: false
+  default-nameserver: # 默认 DNS, 用于解析 DNS 服务器 的域名，必须为 IP, 可为加密 DNS
+    - tls://223.5.5.5
+    - tls://223.6.6.6
+    - system
+  proxy-server-nameserver: # 专用于节点域名解析的 DNS 服务器
+    - 'https://223.5.5.5/dns-query#h3=true'
+    - 'https://223.6.6.6/dns-query#h3=true'
+  # 配置查询域名使用的 DNS 服务器
+  nameserver-policy:
+    "+.lan,+.in-addr.arpa": system
+    "rule-set:private_domain,My_Direct,steam@cn,category-games@cn,cn_domain":
+      - system # 直连域名走系统DNS
+      - tls://223.5.5.5
+      - 114.114.114.114
+    "rule-set:My_Reject,AWAvenue-AD": rcode://success # 广告域名直接返回成功（等于拦截）
+  nameserver: # 兜底DNS，用于解析基于IP的规则的域名，即既不在代理域名规则内也不在直连域名规则内的域名
+    - '8.8.8.8#🔍 DNS_OUT' # 指定 DNS 过代理查询，🔍 DNS_OUT 为策略组名或节点名
+    - '1.1.1.1#🔍 DNS_OUT'
+    - 'tls://8.8.8.8#🔍 DNS_OUT'
+    - 'tls://1.1.1.1#🔍 DNS_OUT'
+
+# -----------------------------------节点配置---------------------------------------#
+# 自建的节点可以h手动配置到这里，参考wiki出站部分配置 https://wiki.metacubex.one/config/proxies/
+proxies:
+  - name: DIRECT-ENO1
+    type: direct
+    udp: true
+    interface-name: eno1
+
+# --------------------------策略组配置-------------------------#
+proxy-groups:
+  - {name: 🚀 节点选择, type: select, proxies: [♻️ 自动选择, 🏗 自建, 🚁 机场自动, 📲 白嫖自动, 🚁 机场, 📲 白嫖, 🎯 全球直连]}
+  - {name: 🏗 自建, type: select, tolerance: 10, include-all-proxies: true, exclude-type: "Direct"}
+  - {name: 🀄 中转, type: select, proxies: [🚁 机场, 📲 白嫖, 🇭🇰 香港, 🇸🇬 狮城, 🇺🇲 美国, 🇯🇵 日本, 🇰🇷 韩国, 其它地区]}
+  - {name: 🚁 机场, type: select, use: [peiqian]}
+  - {name: 🔍 DNS_OUT, <<: *pr}
+  - {name: 💬 AI, type: select, proxies: [🇸🇬 狮城, 🏗 自建, 🚀 节点选择, 🇺🇲 美国, 🇯🇵 日本, 🇰🇷 韩国]}
+  - {name: OpenAI, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/ChatGPT.png"}
+  - {name: Google, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Google_Search.png"}
+  - {name: 微软服务, type: select, proxies: [🚀 节点选择, 🎯 全球直连], icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Microsoft.png"}
+  - {name: Telegram, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Telegram.png"}
+  - {name: Twitter, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Twitter.png"}
+  - {name: Meta, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Facebook.png"}
+  - {name: Spotify, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Spotify.png"}
+  - {name: Steam@cn, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Game.png"}
+  - {name: epicgame, <<: *pr, icon: "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Epic_Games.png"}
+  - {name: 📲 白嫖, type: select, use: [ikuuu]}
+  - {name: ♻️ 自动选择, type: url-test, tolerance: 10, proxies: [📲 白嫖自动, 🏗 自建, 🚁 机场自动]}
+  - {name: 🚁 机场自动, type: url-test, tolerance: 10, use: [peiqian]}
+  - {name: 📲 白嫖自动, type: url-test, tolerance: 50, use: [ikuuu]}
+  - {name: 🎯 全球直连, type: select, proxies: [DIRECT, DIRECT-ENO1]}
+  - {name: 🛑 全球拦截, type: select, proxies: [REJECT, 🎯 全球直连]}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]}
+
+  # 分隔,下面是地区分组
+  - {name: 🇯🇵 日本, type: url-test, tolerance: 10, include-all-providers: true, filter: "(?i)日|jp|japan|🇯🇵"}
+  - {name: 🇸🇬 狮城, type: url-test, tolerance: 10, include-all-providers: true, filter: "(?i)(新|sg|singapore|🇸🇬)"}
+  - {name: 🇭🇰 香港, type: url-test, tolerance: 10, include-all-providers: true, filter: "(?i)港|hk|hongkong|hong kong|🇭🇰"}
+  - {name: 🇨🇳 台湾, type: url-test, tolerance: 10, include-all-providers: true, filter: "(?i)台|tw|taiwan"}
+  - {name: 🇺🇲 美国, type: url-test, tolerance: 10, include-all-providers: true, filter: "(?i)美|us|unitedstates|united states|🇺🇲"}
+  - {name: 🇰🇷 韩国, type: url-test, tolerance: 10, include-all-providers: true, filter: "(?i)(KR|Korea|KOR|首尔|韩|韓|🇰🇷)"}
+  - {name: 其它地区, type: url-test, tolerance: 10, include-all-providers: true, filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|🇰🇷|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates|韩|首尔|KR|Korea|KOR)).*"}
+  - {name: 🇯🇵 日本-自建, type: select, include-all-proxies: true, filter: "(?i)日|jp|japan"}
+  - {name: 🇺🇲 美国-自建, type: select, include-all-proxies: true, filter: "(?i)美|us|unitedstates|united states"}
+  - {name: 🇭🇰 香港-自建, type: select, include-all-proxies: true, filter: "(?i)港|hk|hongkong|hong kong"}
+  - {name: 全部节点, type: select , include-all: true, exclude-type: "Direct"}
+
+
+# ----------------------------规则配置-----------------------#
+rules:
+  # 自己规则
+  - IP-CIDR,20.205.243.166/32,🎯 全球直连,no-resolve  # 阻止 DNS 干扰
+  - RULE-SET,My_Reject,🛑 全球拦截
+  - RULE-SET,My_Proxy,🚀 节点选择
+  - RULE-SET,My_Direct,🎯 全球直连
+
+  # RULE-SET规则
+  - RULE-SET,AWAvenue-AD,🛑 全球拦截
+  - RULE-SET,private_domain,🎯 全球直连 # 局域网域名直连
+  - RULE-SET,steam@cn,Steam@cn
+  - RULE-SET,epicgame,epicgame
+  - RULE-SET,category-games@cn,Steam@cn
+  - RULE-SET,cn_domain,🎯 全球直连
+
+  - RULE-SET,openai,OpenAI
+  - RULE-SET,google_domain,Google
+  - RULE-SET,twitter_domain,Twitter
+  - RULE-SET,meta_domain,Meta
+  - RULE-SET,category-ai-chat-!cn,💬 AI
+  - RULE-SET,telegram_domain,Telegram
+  - RULE-SET,spotify_domain,Spotify
+  - RULE-SET,microsoft_domain,微软服务
+  - RULE-SET,github_domain,其它地区
+  - RULE-SET,telegram_domain,🚀 节点选择
+  - RULE-SET,geolocation-!cn,🚀 节点选择
+
+  - RULE-SET,google_ip,🚀 节点选择,no-resolve
+  - RULE-SET,netflix_ip,🚀 节点选择,no-resolve
+  - RULE-SET,telegram_ip,🚀 节点选择,no-resolve
+  - RULE-SET,private_ip,🎯 全球直连,no-resolve # 局域网ip直连
+  - RULE-SET,cn_ip,🎯 全球直连
+
+  - MATCH,🐟 漏网之鱼
+
+#----------------------- 在线规则列表配置----------------------#
+rule-providers:
+  # 自己的规则集
+  My_Reject:
+    <<: *classical
+    url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Reject.txt
+  My_Direct:
+    <<: *classical
+    url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Direct.txt
+  My_Proxy:
+    <<: *classical
+    url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Proxy.txt
+
+  # domain
+  private_domain:
+    <<: *domain
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs
+  AWAvenue-AD:
+    <<: *domain
+    url: https://github.com/TG-Twilight/AWAvenue-Ads-Rule/raw/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash.mrs
+  category-ai-chat-!cn:
+    <<: *domain
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-chat-!cn.mrs
+  openai:
+    <<: *domain
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs
+  telegram_domain: {!!merge <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+  github_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"
+  twitter_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs"
+  meta_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/meta.mrs"
+  google_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"
+  spotify_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
+  microsoft_domain: {!!merge <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  steam@cn:
+    <<: *domain
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs
+  epicgame:
+    <<: *domain
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/epicgames.mrs
+  category-games@cn:
+    <<: *domain
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games@cn.mrs
+  geolocation-!cn:
+    <<: *domain
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs
+  cn_domain:
+    <<: *domain
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs
+
+
+# ip
+  private_ip:
+    <<: *ip
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs
+  cn_ip:
+    <<: *ip
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs
+  google_ip: {!!merge <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  telegram_ip: {!!merge <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  netflix_ip: {!!merge <<: *ip, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
