@@ -13,6 +13,7 @@ DOMAIN-SUFFIX,agentrouter.org
 DOMAIN-SUFFIX,giffgaff.com
 DOMAIN-SUFFIX,fedorainfracloud.org
 DOMAIN-SUFFIX,fedoraproject.org
+DOMAIN-SUFFIX,binance.com
 PROCESS-NAME,tailscale.exe
 PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,trim-qbittorrent-nox
