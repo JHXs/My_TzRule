@@ -6,6 +6,7 @@ DOMAIN-SUFFIX,smtp
 DOMAIN-SUFFIX,local
 DOMAIN-SUFFIX,yihaojichang.xyz
 DOMAIN-SUFFIX,hansel.top
+DOMAIN-SUFFIX,801998.xyz
 DOMAIN-SUFFIX,vultr.com
 DOMAIN-SUFFIX,chatopens.chat
 DOMAIN-SUFFIX,kuafuzy.com
