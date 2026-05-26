@@ -20,7 +20,7 @@ PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,trim-qbittorrent-nox
 PROCESS-NAME,qbittorrent-nox
 PROCESS-NAME,zerotier-one
-PROCESS-NAME,easytier-core
+# PROCESS-NAME,easytier-core
 # tailscale
 IP-CIDR,100.64.0.0/10
 IP-CIDR,192.168.1.0/24
