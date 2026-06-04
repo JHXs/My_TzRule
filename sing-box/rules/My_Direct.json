@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_keyword": [
+        "announce",
+        "torrent",
+        "tracker"
+      ],
+      "domain_suffix": [
+        "smtp",
+        "local",
+        "yihaojichang.xyz",
+        "hansel.top",
+        "801998.xyz",
+        "vultr.com",
+        "chatopens.chat",
+        "kuafuzy.com",
+        "agentrouter.org",
+        "giffgaff.com",
+        "binance.com"
+      ],
+      "process_name": [
+        "tailscale.exe",
+        "tailscaled.exe",
+        "trim-qbittorrent-nox",
+        "qbittorrent-nox",
+        "zerotier-one"
+      ],
+      "ip_cidr": [
+        "100.64.0.0/10",
+        "192.168.1.0/24",
+        "172.18.67.0/24",
+        "172.17.0.1/24",
+        "198.41.0.0/16"
+      ],
+      "source_ip_cidr": [
+        "172.17.1.3/32"
+      ]
+    }
+  ]
+}

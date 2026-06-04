@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "domain_keyword": [
+        "bulianglin.com",
+        "cdn.winget.microsoft.com",
+        "googleapis.cn",
+        "springer.com"
+      ],
+      "domain_suffix": [
+        "z.ai",
+        "v2rayse.com",
+        "cff.pw",
+        "vpnse.org",
+        "cfmem.com"
+      ],
+      "domain": [
+        "modelstudio.console.aliyun.com"
+      ]
+    }
+  ]
+}

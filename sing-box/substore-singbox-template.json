@@ -1,0 +1,888 @@
+{
+  "log": {
+    "disabled": false,
+    "level": "info",
+    "timestamp": true
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "0.0.0.0:9095",
+      "external_ui": "ui",
+      "secret": "ikunji",
+      "external_ui_download_url": "https://ghp.ci/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+      "external_ui_download_detour": "🎯 全球直连",
+      "default_mode": "rule"
+    },
+    "cache_file": {
+      "enabled": true,
+      "path": "cache.db",
+      "store_fakeip": true
+    }
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns_direct",
+        "address": "https://223.5.5.5/dns-query",
+        "address_strategy": "ipv4_only",
+        "strategy": "ipv4_only",
+        "detour": "🎯 全球直连"
+      },
+      {
+        "tag": "dns_local",
+        "address": "local",
+        "address_strategy": "ipv4_only",
+        "strategy": "ipv4_only",
+        "detour": "🎯 全球直连"
+      },
+      {
+        "tag": "dns_proxy",
+        "address": "tls://8.8.8.8",
+        "address_strategy": "ipv4_only",
+        "strategy": "ipv4_only",
+        "detour": "🔍 DNS_OUT"
+      },
+      {
+        "tag": "dns_block",
+        "address": "rcode://success"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "server": "dns_direct",
+        "disable_cache": true
+      },
+      {
+        "clash_mode": "Direct",
+        "server": "dns_direct"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "dns_proxy"
+      },
+      {
+        "rule_set": [
+          "private_domain",
+          "My_Direct",
+          "steam@cn",
+          "category-games@cn",
+          "cn_domain"
+        ],
+        "server": "dns_direct"
+      },
+      {
+        "rule_set": [
+          "My_Reject",
+          "AWAvenue-AD"
+        ],
+        "server": "dns_block"
+      }
+    ],
+    "final": "dns_proxy",
+    "strategy": "ipv4_only"
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "address": "172.19.0.1/30",
+      "mtu": 9000,
+      "auto_route": true,
+      "auto_redirect": true,
+      "strict_route": true,
+      "stack": "mixed",
+      "sniff": true,
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 2080
+        }
+      }
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "0.0.0.0",
+      "listen_port": 2080,
+      "sniff": true,
+      "users": [
+        {
+          "username": "ikunji",
+          "password": "ikunji"
+        }
+      ]
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "🚀 节点选择",
+      "type": "selector",
+      "outbounds": [
+        "♻️ 自动选择",
+        "🏗 自建",
+        "🇭🇰 香港-自建",
+        "🇯🇵 日本-自建",
+        "🇸🇬 狮城-自建",
+        "🇺🇲 美国-自建",
+        "🚁 机场自动",
+        "📲 白嫖自动",
+        "🚁 机场",
+        "📲 白嫖",
+        "🇭🇰 香港",
+        "🇯🇵 日本",
+        "🇸🇬 狮城",
+        "🇺🇲 美国",
+        "🇨🇳 台湾",
+        "🇰🇷 韩国",
+        "其它地区",
+        "🎯 全球直连"
+      ]
+    },
+    {
+      "tag": "🏗 自建",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[自建\\]",
+        "exclude": "^\\[自建\\]DIRECT-"
+      }
+    },
+    {
+      "tag": "🀄 中转",
+      "type": "selector",
+      "outbounds": [
+        "🚁 机场",
+        "🚁 机场自动",
+        "📲 白嫖",
+        "🇭🇰 香港",
+        "🇸🇬 狮城",
+        "🇺🇲 美国",
+        "🇯🇵 日本",
+        "🇰🇷 韩国",
+        "其它地区"
+      ]
+    },
+    {
+      "tag": "🇯🇵 日本-自建",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[自建\\].*(日|jp|japan|🇯🇵)",
+        "flags": "i"
+      }
+    },
+    {
+      "tag": "🇺🇲 美国-自建",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[自建\\].*(美|us|usa|unitedstates|united states|america|🇺🇸|🇺🇲)",
+        "flags": "i"
+      }
+    },
+    {
+      "tag": "🇭🇰 香港-自建",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[自建\\].*(港|hk|hongkong|hong kong|🇭🇰)",
+        "flags": "i"
+      }
+    },
+    {
+      "tag": "🇸🇬 狮城-自建",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[自建\\].*(新|sg|singapore|狮城|獅城|🇸🇬)",
+        "flags": "i"
+      }
+    },
+    {
+      "tag": "🚁 机场",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[peiqian\\]"
+      }
+    },
+    {
+      "tag": "🚁 机场自动",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[peiqian\\]"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "📲 白嫖",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[ikuuu\\]"
+      }
+    },
+    {
+      "tag": "📲 白嫖自动",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[ikuuu\\]"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 50
+    },
+    {
+      "tag": "♻️ 自动选择",
+      "type": "urltest",
+      "outbounds": [
+        "🚁 机场自动",
+        "📲 白嫖自动",
+        "🏗 自建"
+      ],
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "🎯 全球直连",
+      "type": "selector",
+      "outbounds": [
+        "DIRECT",
+        "{all}"
+      ],
+      "_filter": {
+        "include": "^\\[自建\\]DIRECT-"
+      }
+    },
+    {
+      "tag": "🛑 全球拦截",
+      "type": "selector",
+      "outbounds": [
+        "REJECT",
+        "🎯 全球直连"
+      ]
+    },
+    {
+      "tag": "🐟 漏网之鱼",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "🎯 全球直连",
+        "♻️ 自动选择"
+      ]
+    },
+    {
+      "tag": "🔍 DNS_OUT",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "🏗 自建",
+        "🇭🇰 香港",
+        "🇭🇰 香港-自建",
+        "🇨🇳 台湾",
+        "🇯🇵 日本",
+        "🇯🇵 日本-自建",
+        "🇸🇬 狮城-自建",
+        "🇸🇬 狮城",
+        "🇺🇲 美国",
+        "🇺🇲 美国-自建",
+        "🇰🇷 韩国",
+        "其它地区",
+        "全部节点",
+        "♻️ 自动选择",
+        "🎯 全球直连"
+      ]
+    },
+    {
+      "tag": "💬 AI",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "🏗 自建",
+        "🇯🇵 日本",
+        "🇺🇲 美国",
+        "其它地区",
+        "♻️ 自动选择"
+      ]
+    },
+    {
+      "tag": "OpenAI",
+      "type": "selector",
+      "outbounds": [
+        "💬 AI",
+        "🚀 节点选择",
+        "🏗 自建",
+        "🇯🇵 日本",
+        "🇺🇲 美国",
+        "其它地区",
+        "🎯 全球直连"
+      ]
+    },
+    {
+      "tag": "Google",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "♻️ 自动选择",
+        "🇭🇰 香港",
+        "🇯🇵 日本",
+        "🇺🇲 美国",
+        "🎯 全球直连"
+      ]
+    },
+    {
+      "tag": "Cloudflare@cn",
+      "type": "selector",
+      "outbounds": [
+        "🎯 全球直连",
+        "🚀 节点选择",
+        "♻️ 自动选择"
+      ]
+    },
+    {
+      "tag": "微软服务",
+      "type": "selector",
+      "outbounds": [
+        "🎯 全球直连",
+        "🚀 节点选择",
+        "♻️ 自动选择"
+      ]
+    },
+    {
+      "tag": "Telegram",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "♻️ 自动选择",
+        "🇭🇰 香港",
+        "🇸🇬 狮城",
+        "🇺🇲 美国"
+      ]
+    },
+    {
+      "tag": "Twitter",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "♻️ 自动选择",
+        "🇯🇵 日本",
+        "🇺🇲 美国"
+      ]
+    },
+    {
+      "tag": "Meta",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "♻️ 自动选择",
+        "🇭🇰 香港",
+        "🇸🇬 狮城",
+        "🇺🇲 美国"
+      ]
+    },
+    {
+      "tag": "Spotify",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "♻️ 自动选择",
+        "🇯🇵 日本",
+        "🇺🇲 美国"
+      ]
+    },
+    {
+      "tag": "Steam@cn",
+      "type": "selector",
+      "outbounds": [
+        "🎯 全球直连",
+        "🚀 节点选择"
+      ]
+    },
+    {
+      "tag": "epicgame",
+      "type": "selector",
+      "outbounds": [
+        "🚀 节点选择",
+        "♻️ 自动选择",
+        "🎯 全球直连"
+      ]
+    },
+    {
+      "tag": "🇯🇵 日本",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "日|jp|japan|🇯🇵",
+        "exclude": "^\\[自建\\]",
+        "flags": "i"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "🇸🇬 狮城",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "新|sg|singapore|狮城|獅城|🇸🇬",
+        "exclude": "^\\[自建\\]",
+        "flags": "i"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "🇭🇰 香港",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "港|hk|hongkong|hong kong|🇭🇰",
+        "exclude": "^\\[自建\\]",
+        "flags": "i"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "🇨🇳 台湾",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "台|tw|taiwan|🇹🇼",
+        "exclude": "^\\[自建\\]",
+        "flags": "i"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "🇺🇲 美国",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "美|us|usa|unitedstates|united states|america|🇺🇸|🇺🇲",
+        "exclude": "^\\[自建\\]",
+        "flags": "i"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "🇰🇷 韩国",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "include": "KR|Korea|KOR|首尔|首爾|韩|韓|🇰🇷",
+        "exclude": "^\\[自建\\]",
+        "flags": "i"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "其它地区",
+      "type": "urltest",
+      "outbounds": [
+        "{all}"
+      ],
+      "_filter": {
+        "exclude": "^\\[自建\\]|🇭🇰|🇯🇵|🇺🇸|🇺🇲|🇸🇬|🇹🇼|🇨🇳|🇰🇷|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|狮城|獅城|美|us|usa|unitedstates|america|韩|韓|首尔|首爾|KR|Korea|KOR|网站|地址|剩余|过期|时间|有效",
+        "flags": "i"
+      },
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m",
+      "tolerance": 10
+    },
+    {
+      "tag": "全部节点",
+      "type": "selector",
+      "outbounds": [
+        "{all}"
+      ]
+    },
+    {
+      "tag": "GLOBAL",
+      "type": "selector",
+      "outbounds": [
+        "{all}",
+        "🚀 节点选择",
+        "🎯 全球直连"
+      ]
+    },
+    {
+      "tag": "DIRECT",
+      "type": "direct"
+    },
+    {
+      "tag": "REJECT",
+      "type": "block"
+    },
+    {
+      "tag": "dns-out",
+      "type": "dns"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": true,
+    "final": "🐟 漏网之鱼",
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "clash_mode": "direct",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "clash_mode": "global",
+        "outbound": "GLOBAL"
+      },
+      {
+        "rule_set": [
+          "cn_domain",
+          "cn_ip"
+        ],
+        "port": 3478,
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "port": 3478,
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "domain_suffix": [
+          "fedorainfracloud.org",
+          "fedoraproject.org"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "ip_cidr": [
+          "20.205.243.166/32"
+        ],
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": [
+          "My_Reject",
+          "AWAvenue-AD"
+        ],
+        "outbound": "🛑 全球拦截"
+      },
+      {
+        "rule_set": "My_Proxy",
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "rule_set": "My_Direct",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "private_domain",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "steam@cn",
+        "outbound": "Steam@cn"
+      },
+      {
+        "rule_set": "epicgame",
+        "outbound": "epicgame"
+      },
+      {
+        "rule_set": "cloudflare@cn",
+        "outbound": "Cloudflare@cn"
+      },
+      {
+        "rule_set": "category-games@cn",
+        "outbound": "Steam@cn"
+      },
+      {
+        "rule_set": "cn_domain",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "openai",
+        "outbound": "OpenAI"
+      },
+      {
+        "rule_set": "google_domain",
+        "outbound": "Google"
+      },
+      {
+        "rule_set": "twitter_domain",
+        "outbound": "Twitter"
+      },
+      {
+        "rule_set": "meta_domain",
+        "outbound": "Meta"
+      },
+      {
+        "rule_set": "category-ai-chat-!cn",
+        "outbound": "💬 AI"
+      },
+      {
+        "rule_set": [
+          "telegram_domain",
+          "telegram_ip"
+        ],
+        "outbound": "Telegram"
+      },
+      {
+        "rule_set": "spotify_domain",
+        "outbound": "Spotify"
+      },
+      {
+        "rule_set": "microsoft_domain",
+        "outbound": "微软服务"
+      },
+      {
+        "rule_set": "github_domain",
+        "outbound": "其它地区"
+      },
+      {
+        "rule_set": "geolocation-!cn",
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "rule_set": [
+          "google_ip",
+          "netflix_ip"
+        ],
+        "outbound": "🚀 节点选择"
+      },
+      {
+        "rule_set": "private_ip",
+        "outbound": "🎯 全球直连"
+      },
+      {
+        "rule_set": "cn_ip",
+        "outbound": "🎯 全球直连"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "My_Reject",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/JHXs/My_TzRule/master/sing-box/rules/My_Reject.json",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "My_Direct",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/JHXs/My_TzRule/master/sing-box/rules/My_Direct.json",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "My_Proxy",
+        "type": "remote",
+        "format": "source",
+        "url": "https://raw.githubusercontent.com/JHXs/My_TzRule/master/sing-box/rules/My_Proxy.json",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "AWAvenue-AD",
+        "type": "remote",
+        "format": "source",
+        "url": "https://github.com/TG-Twilight/AWAvenue-Ads-Rule/raw/refs/heads/main/Filters/AWAvenue-Ads-Rule-Singbox.json",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "private_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/private.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "category-ai-chat-!cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-ai-chat-!cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "openai",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/openai.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "telegram_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "github_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/github.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "cloudflare@cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cloudflare@cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "twitter_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/twitter.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "meta_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/meta.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "google_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "spotify_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/spotify.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "microsoft_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/microsoft.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "steam@cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/steam@cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "epicgame",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/epicgames.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "category-games@cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/category-games@cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "geolocation-!cn",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "cn_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "private_ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/private.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "cn_ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "google_ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "telegram_ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs",
+        "download_detour": "🎯 全球直连"
+      },
+      {
+        "tag": "netflix_ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/netflix.srs",
+        "download_detour": "🎯 全球直连"
+      }
+    ]
+  }
+}
