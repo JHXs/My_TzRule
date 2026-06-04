@@ -1,0 +1,341 @@
+# Sub-Store Mihomo 覆写 v3：按来源分组版
+# 前提：在每个单条订阅先用 substore-source-prefix.js 给节点打标：
+#   peiqian -> [peiqian]
+#   ikuuu   -> [ikuuu]
+#   自建     -> [自建]
+# 注意：这里不要写 proxies:，否则会覆盖 Sub-Store 生成的节点。
+
+proxy-groups:
+  - name: 🚀 节点选择
+    type: select
+    proxies: [♻️ 自动选择, 🏗 自建, 🚁 机场自动, 📲 白嫖自动, 🚁 机场, 📲 白嫖, 🇭🇰 香港, 🇯🇵 日本, 🇸🇬 狮城, 🇺🇲 美国, 🇨🇳 台湾, 🇰🇷 韩国, 其它地区, 🎯 全球直连]
+
+  # 来源分组
+  - name: 🏗 自建
+    type: select
+    include-all-proxies: true
+    filter: '^\[自建\]'
+
+  - name: 🚁 机场
+    type: select
+    include-all-proxies: true
+    filter: '^\[peiqian\]'
+
+  - name: 🚁 机场自动
+    type: url-test
+    include-all-proxies: true
+    filter: '^\[peiqian\]'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 📲 白嫖
+    type: select
+    include-all-proxies: true
+    filter: '^\[ikuuu\]'
+
+  - name: 📲 白嫖自动
+    type: url-test
+    include-all-proxies: true
+    filter: '^\[ikuuu\]'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 50
+
+  - name: ♻️ 自动选择
+    type: url-test
+    proxies: [🚁 机场自动, 📲 白嫖自动, 🏗 自建]
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 🎯 全球直连
+    type: select
+    proxies: [DIRECT]
+
+  - name: 🛑 全球拦截
+    type: select
+    proxies: [REJECT, 🎯 全球直连]
+
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies: [🚀 节点选择, 🎯 全球直连, ♻️ 自动选择]
+
+  - name: 🔍 DNS_OUT
+    type: select
+    proxies: [🚀 节点选择, ♻️ 自动选择, 🚁 机场自动, 📲 白嫖自动, 🎯 全球直连]
+
+  - name: 💬 AI
+    type: select
+    proxies: [🚀 节点选择, 🇺🇲 美国, 🇯🇵 日本, 🇸🇬 狮城, 🇭🇰 香港, ♻️ 自动选择, 🎯 全球直连]
+
+  - name: OpenAI
+    type: select
+    proxies: [💬 AI, 🇺🇲 美国, 🇯🇵 日本, 🇸🇬 狮城, 🚀 节点选择, 🎯 全球直连]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/ChatGPT.png
+
+  - name: Google
+    type: select
+    proxies: [🚀 节点选择, 🇭🇰 香港, 🇯🇵 日本, 🇸🇬 狮城, 🇺🇲 美国, ♻️ 自动选择, 🎯 全球直连]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Google_Search.png
+
+  - name: Cloudflare@cn
+    type: select
+    proxies: [🎯 全球直连, 🚀 节点选择, ♻️ 自动选择]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Cloudflare.png
+
+  - name: 微软服务
+    type: select
+    proxies: [🎯 全球直连, 🚀 节点选择, ♻️ 自动选择, 🇭🇰 香港, 🇯🇵 日本, 🇸🇬 狮城, 🇺🇲 美国]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Microsoft.png
+
+  - name: Telegram
+    type: select
+    proxies: [🚀 节点选择, 🇸🇬 狮城, 🇭🇰 香港, 🇯🇵 日本, 🇺🇲 美国, ♻️ 自动选择, 🎯 全球直连]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Telegram.png
+
+  - name: Twitter
+    type: select
+    proxies: [🚀 节点选择, 🇯🇵 日本, 🇺🇲 美国, 🇸🇬 狮城, 🇭🇰 香港, ♻️ 自动选择, 🎯 全球直连]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Twitter.png
+
+  - name: Meta
+    type: select
+    proxies: [🚀 节点选择, 🇯🇵 日本, 🇺🇲 美国, 🇸🇬 狮城, 🇭🇰 香港, ♻️ 自动选择, 🎯 全球直连]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Facebook.png
+
+  - name: Spotify
+    type: select
+    proxies: [🚀 节点选择, 🇭🇰 香港, 🇯🇵 日本, 🇸🇬 狮城, 🇺🇲 美国, ♻️ 自动选择, 🎯 全球直连]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Spotify.png
+
+  - name: Steam@cn
+    type: select
+    proxies: [🎯 全球直连, 🚀 节点选择, ♻️ 自动选择]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Game.png
+
+  - name: epicgame
+    type: select
+    proxies: [🎯 全球直连, 🚀 节点选择, ♻️ 自动选择]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Epic_Games.png
+
+  # 地区分组：默认包含全部来源。如果你只想地区组包含 peiqian，可把每条 filter 前面加 (?=.*^\[peiqian\])
+  - name: 🇯🇵 日本
+    type: url-test
+    include-all-proxies: true
+    filter: '(?i)日|jp|japan|🇯🇵'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 🇸🇬 狮城
+    type: url-test
+    include-all-proxies: true
+    filter: '(?i)(新|sg|singapore|狮城|獅城|🇸🇬)'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 🇭🇰 香港
+    type: url-test
+    include-all-proxies: true
+    filter: '(?i)港|hk|hongkong|hong kong|🇭🇰'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 🇨🇳 台湾
+    type: url-test
+    include-all-proxies: true
+    filter: '(?i)台|tw|taiwan|🇹🇼'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 🇺🇲 美国
+    type: url-test
+    include-all-proxies: true
+    filter: '(?i)美|us|usa|unitedstates|united states|america|🇺🇸|🇺🇲'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 🇰🇷 韩国
+    type: url-test
+    include-all-proxies: true
+    filter: '(?i)(KR|Korea|KOR|首尔|首爾|韩|韓|🇰🇷)'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 其它地区
+    type: url-test
+    include-all-proxies: true
+    filter: '(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇺🇲|🇸🇬|🇹🇼|🇨🇳|🇰🇷|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|狮城|獅城|美|us|usa|unitedstates|america|韩|韓|首尔|首爾|KR|Korea|KOR)).*'
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 10
+
+  - name: 全部节点
+    type: select
+    include-all-proxies: true
+    exclude-type: Direct
+
+rules:
+  - AND,((RULE-SET,cn_domain),(DST-PORT,3478)),🎯 全球直连
+  - AND,((RULE-SET,cn_ip),(DST-PORT,3478)),🎯 全球直连
+  - DST-PORT,3478,🚀 节点选择
+  - DOMAIN-SUFFIX,fedorainfracloud.org,🎯 全球直连
+  - DOMAIN-SUFFIX,fedoraproject.org,🎯 全球直连
+  - IP-CIDR,20.205.243.166/32,🎯 全球直连,no-resolve
+  - RULE-SET,My_Reject,🛑 全球拦截
+  - RULE-SET,My_Proxy,🚀 节点选择
+  - RULE-SET,My_Direct,🎯 全球直连
+  - RULE-SET,AWAvenue-AD,🛑 全球拦截
+  - RULE-SET,private_domain,🎯 全球直连
+  - RULE-SET,steam@cn,Steam@cn
+  - RULE-SET,epicgame,epicgame
+  - RULE-SET,cloudflare@cn,Cloudflare@cn
+  - RULE-SET,category-games@cn,Steam@cn
+  - RULE-SET,cn_domain,🎯 全球直连
+  - RULE-SET,openai,OpenAI
+  - RULE-SET,google_domain,Google
+  - RULE-SET,twitter_domain,Twitter
+  - RULE-SET,meta_domain,Meta
+  - RULE-SET,category-ai-chat-!cn,💬 AI
+  - RULE-SET,telegram_domain,Telegram
+  - RULE-SET,spotify_domain,Spotify
+  - RULE-SET,microsoft_domain,微软服务
+  - RULE-SET,github_domain,其它地区
+  - RULE-SET,geolocation-!cn,🚀 节点选择
+  - RULE-SET,google_ip,🚀 节点选择,no-resolve
+  - RULE-SET,netflix_ip,🚀 节点选择,no-resolve
+  - RULE-SET,telegram_ip,🚀 节点选择,no-resolve
+  - RULE-SET,private_ip,🎯 全球直连,no-resolve
+  - RULE-SET,cn_ip,🎯 全球直连
+  - MATCH,🐟 漏网之鱼
+
+rule-providers:
+  My_Reject: {<<: *classical, url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Reject.txt}
+  My_Direct: {<<: *classical, url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Direct.txt}
+  My_Proxy: {<<: *classical, url: https://raw.githubusercontent.com/JHXs/My_TzRule/master/My_Proxy.txt}
+  private_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs}
+  AWAvenue-AD: {<<: *domain, url: https://github.com/TG-Twilight/AWAvenue-Ads-Rule/raw/refs/heads/main/Filters/AWAvenue-Ads-Rule-Clash.mrs}
+  category-ai-chat-!cn: {<<: *domain, url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-chat-!cn.mrs}
+  openai: {<<: *domain, url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs}
+  telegram_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs}
+  github_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs}
+  cloudflare@cn: {<<: *domain, url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/cloudflare@cn.mrs}
+  twitter_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs}
+  meta_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/meta.mrs}
+  google_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs}
+  spotify_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs}
+  microsoft_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs}
+  steam@cn: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs}
+  epicgame: {<<: *domain, url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/epicgames.mrs}
+  category-games@cn: {<<: *domain, url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-games@cn.mrs}
+  geolocation-!cn: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs}
+  cn_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs}
+  private_ip: {<<: *ip, url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/private.mrs}
+  cn_ip: {<<: *ip, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs}
+  google_ip: {<<: *ip, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs}
+  telegram_ip: {<<: *ip, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs}
+  netflix_ip: {<<: *ip, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs}
+
+mode: rule
+log-level: info
+mixed-port: 7890
+port: 7891
+socks-port: 7892
+redir-port: 7893
+tproxy-port: 7894
+ipv6: false
+allow-lan: true
+authentication:
+  - "ikunji:ikunji"
+unified-delay: true
+tcp-concurrent: true
+
+geodata-mode: true
+geodata-loader: standard
+geo-auto-update: false
+geo-update-interval: 48
+geox-url:
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  asn: "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+
+external-controller: 0.0.0.0:8090
+secret: "ikunji"
+external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip"
+find-process-mode: strict
+keep-alive-idle: 600
+keep-alive-interval: 30
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - "Mijia Cloud"
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
+    - "+.apple.com"
+
+tun:
+  enable: false
+  stack: mixed
+  dns-hijack:
+    - "any:53"
+    - "tcp://any:53"
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  strict-route: true
+  exclude-interface:
+    - "Tailscale"
+
+dns:
+  enable: true
+  prefer-h3: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  fake-ip-range: 28.0.0.1/8
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "+.lan"
+    - "+.local"
+    - "*.msftconnecttest.com"
+  respect-rules: false
+  default-nameserver:
+    - tls://223.5.5.5
+    - tls://223.6.6.6
+    - system
+  proxy-server-nameserver:
+    - 'https://223.5.5.5/dns-query#h3=true'
+    - 'https://223.6.6.6/dns-query#h3=true'
+  nameserver-policy:
+    "+.lan,+.in-addr.arpa": system
+    "rule-set:private_domain,My_Direct,steam@cn,category-games@cn,cn_domain":
+      - system
+      - tls://223.5.5.5
+      - 114.114.114.114
+    "rule-set:My_Reject,AWAvenue-AD": rcode://success
+  nameserver:
+    - '8.8.8.8#🔍 DNS_OUT'
+    - '1.1.1.1#🔍 DNS_OUT'
+    - 'tls://8.8.8.8#🔍 DNS_OUT'
+    - 'tls://1.1.1.1#🔍 DNS_OUT'
