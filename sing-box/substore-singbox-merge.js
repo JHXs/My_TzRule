@@ -1,6 +1,6 @@
 // Sub-Store 文件脚本：把订阅/组合订阅节点合并进 sing-box JSON 模板。
 // 用法示例：
-//   https://raw.githubusercontent.com/JHXs/My_TzRule/master/substore-singbox-merge.js#type=1&name=你的组合订阅名
+//   https://raw.githubusercontent.com/JHXs/My_TzRule/master/sing-box/substore-singbox-merge.js#type=1&name=你的组合订阅名
 // 参数：
 //   type=1|collection|col  组合订阅
 //   type=2|subscription|sub 单条订阅
@@ -11,6 +11,15 @@ function getParams() {
 
   function readSearchParams(input) {
     if (!input) return;
+
+    // Sub-Store 传给脚本的 $arguments 通常是对象：{ type: '1', name: 'xxx' }
+    if (typeof input === 'object') {
+      Object.keys(input).forEach((key) => {
+        if (input[key] != null) params[key] = String(input[key]);
+      });
+      return;
+    }
+
     String(input)
       .replace(/^#/, '')
       .split('&')
