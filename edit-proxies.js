@@ -1,5 +1,5 @@
-const prefix = $arguments.prefix || $arguments.name || 'ikuuu'
-const interfaceName = $arguments.interfaceName || $arguments.interface || 'wlp11s0'
+const prefix = $arguments.prefix || $arguments.name
+const interfaceName = $arguments.interfaceName || $arguments.interface
 
 if (prefix) {
   const tag = `[${prefix}]`
