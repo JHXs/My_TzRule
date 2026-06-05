@@ -6,7 +6,8 @@
 # 注意：这里不要写 proxies:，否则会覆盖 Sub-Store 生成的节点。
 
 group-anchor:
-  pr: &pr {type: select, proxies: [🚀 节点选择, 🏗 自建, 🇭🇰 香港, 🇭🇰 香港-自建, 🇨🇳 台湾, 🇯🇵 日本, 🇯🇵 日本-自建, 🇸🇬 狮城-自建, 🇸🇬 狮城, 🇺🇲 美国, 🇺🇲 美国-自建, 🇰🇷 韩国, 其它地区, 全部节点, ♻️ 自动选择, 🎯 全球直连]}
+  pr: &pr {type: select, proxies: [🚀 节点选择, 🏗 自建, 🇭🇰 香港, 🇭🇰 香港-自建, 🇨🇳 台湾, 🇯🇵 日本, 🇯🇵 日本-自建, 🇸🇬 狮城-自建, 🇸🇬 狮城, 🇺🇲 美国, 🇺🇲 美国-自建, 🇦🇺 澳大利亚,🇦🇺 澳大利亚-自建, 🇹🇷 土耳其, 🇰🇷 韩国, 其它地区, 全部节点, ♻️ 自动选择, 🎯 全球直连]}
+  url-test: &url-test {type: 'url-test', url: "https://cp.cloudflare.com/generate_204", interval: 300}
 
 rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
@@ -21,11 +22,12 @@ proxy-groups:
   - {name: '🇺🇲 美国-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(美|us|usa|unitedstates|united states|america|🇺🇸|🇺🇲)'}
   - {name: '🇭🇰 香港-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(港|hk|hongkong|hong kong|🇭🇰)'}
   - {name: '🇸🇬 狮城-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(新|sg|singapore|狮城|獅城|🇸🇬)'}
+  - {name: '🇦🇺 澳大利亚-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(澳|au|australia|🇦🇺)'}
   - {name: '🚁 机场', type: 'select', include-all-proxies: true, filter: '^\[peiqian\]'}
-  - {name: '🚁 机场自动', type: 'url-test', include-all-proxies: true, filter: '^\[peiqian\]', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
+  - {name: '🚁 机场自动', <<: *url-test, include-all-proxies: true, filter: '^\[peiqian\]'}
   - {name: '📲 白嫖', type: 'select', include-all-proxies: true, filter: '^\[ikuuu\]'}
-  - {name: '📲 白嫖自动', type: 'url-test', include-all-proxies: true, filter: '^\[ikuuu\]', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 50}
-  - {name: '♻️ 自动选择', type: 'url-test', proxies: ['🚁 机场自动', '📲 白嫖自动', '🏗 自建'], url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
+  - {name: '📲 白嫖自动', <<: *url-test, include-all-proxies: true, filter: '^\[ikuuu\]'}
+  - {name: '♻️ 自动选择', <<: *url-test, proxies: ['🚁 机场自动', '📲 白嫖自动', '🏗 自建']}
   - {name: '🎯 全球直连', type: 'select', proxies: ['DIRECT'], include-all-proxies: true, filter: '^\[自建\]DIRECT-'}
   - {name: '🛑 全球拦截', type: 'select', proxies: ['REJECT', '🎯 全球直连']}
   - {name: '🐟 漏网之鱼', type: 'select', proxies: ['🚀 节点选择', '🎯 全球直连', '♻️ 自动选择']}
@@ -41,13 +43,15 @@ proxy-groups:
   - {name: 'Spotify', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Spotify.png'}
   - {name: 'Steam@cn', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Game.png'}
   - {name: 'epicgame', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Epic_Games.png'}
-  - {name: '🇯🇵 日本', type: 'url-test', include-all-proxies: true, filter: '(?i)日|jp|japan|🇯🇵', exclude-filter: '^\[自建\]', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
-  - {name: '🇸🇬 狮城', type: 'url-test', include-all-proxies: true, filter: '(?i)(新|sg|singapore|狮城|獅城|🇸🇬)', exclude-filter: '^\[自建\]', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
-  - {name: '🇭🇰 香港', type: 'url-test', include-all-proxies: true, filter: '(?i)港|hk|hongkong|hong kong|🇭🇰', exclude-filter: '^\[自建\]', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
-  - {name: '🇨🇳 台湾', type: 'url-test', include-all-proxies: true, filter: '(?i)台|tw|taiwan|🇹🇼', exclude-filter: '^\[自建\]', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
-  - {name: '🇺🇲 美国', type: 'url-test', include-all-proxies: true, filter: '(?i)美|us|usa|unitedstates|united states|america|🇺🇸|🇺🇲', exclude-filter: '^\[自建\]', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
-  - {name: '🇰🇷 韩国', type: 'url-test', include-all-proxies: true, filter: '(?i)(KR|Korea|KOR|首尔|首爾|韩|韓|🇰🇷)', exclude-filter: '^\[自建\]', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
-  - {name: '其它地区', type: 'url-test', include-all-proxies: true, filter: '.*', exclude-filter: '(?i)^\[自建\]|🇭🇰|🇯🇵|🇺🇸|🇺🇲|🇸🇬|🇹🇼|🇨🇳|🇰🇷|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|狮城|獅城|美|us|usa|unitedstates|america|韩|韓|首尔|首爾|KR|Korea|KOR', url: 'https://cp.cloudflare.com/generate_204', interval: 300, tolerance: 10}
+  - {name: '🇯🇵 日本', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)日|jp|japan|🇯🇵', exclude-filter: '^\[自建\]'}
+  - {name: '🇸🇬 狮城', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)(新|sg|singapore|狮城|獅城|🇸🇬)', exclude-filter: '^\[自建\]'}
+  - {name: '🇭🇰 香港', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)港|hk|hongkong|hong kong|🇭🇰', exclude-filter: '^\[自建\]'}
+  - {name: '🇨🇳 台湾', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)台|tw|taiwan|🇹🇼', exclude-filter: '^\[自建\]'}
+  - {name: '🇺🇲 美国', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)美|us|usa|unitedstates|united states|america|🇺🇸|🇺🇲', exclude-filter: '^\[自建\]'}
+  - {name: '🇰🇷 韩国', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)(KR|Korea|KOR|首尔|首爾|韩|韓|🇰🇷)', exclude-filter: '^\[自建\]'}
+  - {name: '🇦🇺 澳大利亚', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: "(?i)(澳|au|australia|🇦🇺)", exclude-filter: '^\[自建\]'}
+  - {name: '🇹🇷 土耳其', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: "(?i)(土|tr|turkey|türkiye|turkiye|🇹🇷)", exclude-filter: '^\[自建\]'}
+  - {name: '其它地区', <<: *url-test, include-all-proxies: true, filter: '.*', exclude-filter: '(?i)^\[自建\]|🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇹🇼|🇨🇳|🇰🇷|🇦🇺|🇹🇷|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|狮城|獅城|美|us|usa|unitedstates|america|韩|韓|首尔|首爾|KR|Korea|KOR|澳|au|australia|土|tr|turkey|türkiye|turkiye'}
   - {name: '全部节点', type: 'select', include-all-proxies: true, exclude-type: 'Direct'}
 
 rules:
