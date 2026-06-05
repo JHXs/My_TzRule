@@ -6,7 +6,7 @@
 # 注意：这里不要写 proxies:，否则会覆盖 Sub-Store 生成的节点。
 
 group-anchor:
-  pr: &pr {type: select, proxies: [🚀 节点选择, 🏗 自建, 🇭🇰 香港, 🇭🇰 香港-自建, 🇨🇳 台湾, 🇯🇵 日本, 🇯🇵 日本-自建, 🇸🇬 狮城-自建, 🇸🇬 狮城, 🇺🇲 美国, 🇺🇲 美国-自建, 🇦🇺 澳大利亚,🇦🇺 澳大利亚-自建, 🇹🇷 土耳其, 🇰🇷 韩国, 其它地区, 全部节点, ♻️ 自动选择, 🎯 全球直连]}
+  pr: &pr {type: select, proxies: [🚀 节点选择, 🏗 自建, 🎯 全球直连, 🇭🇰 香港, 🇭🇰 香港-自建, 🇨🇳 台湾, 🇯🇵 日本, 🇯🇵 日本-自建, 🇸🇬 狮城-自建, 🇸🇬 狮城, 🇺🇲 美国, 🇺🇲 美国-自建, 🇦🇺 澳大利亚,🇦🇺 澳大利亚-自建, 🇹🇷 土耳其, 🇰🇷 韩国, 其它地区, 全部节点, ♻️ 自动选择]}
   url-test: &url-test {type: 'url-test', url: "https://cp.cloudflare.com/generate_204", interval: 300}
 
 rule-anchor:
