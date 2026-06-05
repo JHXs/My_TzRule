@@ -18,6 +18,17 @@ proxy-groups:
   - {name: '🚀 节点选择', type: 'select', proxies: ['♻️ 自动选择', '🏗 自建', '🇭🇰 香港-自建', '🇯🇵 日本-自建', '🇸🇬 狮城-自建', '🇺🇲 美国-自建', '🚁 机场自动', '📲 白嫖自动', '🚁 机场', '📲 白嫖', '🇭🇰 香港', '🇯🇵 日本', '🇸🇬 狮城', '🇺🇲 美国', '🇨🇳 台湾', '🇰🇷 韩国', '其它地区', '🎯 全球直连']}
   - {name: '🏗 自建', type: 'select', include-all-proxies: true, filter: '^\[自建\]', exclude-filter: '^\[自建\]DIRECT-'}
   - {name: 🀄 中转, type: select, proxies: [🚁 机场, 🚁 机场自动,  📲 白嫖, 🇭🇰 香港, 🇸🇬 狮城, 🇺🇲 美国, 🇯🇵 日本, 🇰🇷 韩国, 其它地区]}
+  - {name: '💬 AI', <<: *pr}
+  - {name: 'OpenAI', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/ChatGPT.png'}
+  - {name: 'Google', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Google_Search.png'}
+  - {name: 'Cloudflare@cn', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Cloudflare.png'}
+  - {name: '微软服务', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Microsoft.png'}
+  - {name: 'Telegram', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Telegram.png'}
+  - {name: 'Twitter', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Twitter.png'}
+  - {name: 'Meta', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Facebook.png'}
+  - {name: 'Spotify', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Spotify.png'}
+  - {name: 'Steam@cn', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Game.png'}
+  - {name: 'epicgame', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Epic_Games.png'}
   - {name: '🇯🇵 日本-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(日|jp|japan|🇯🇵)'}
   - {name: '🇺🇲 美国-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(美|us|usa|unitedstates|united states|america|🇺🇸|🇺🇲)'}
   - {name: '🇭🇰 香港-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(港|hk|hongkong|hong kong|🇭🇰)'}
@@ -32,17 +43,6 @@ proxy-groups:
   - {name: '🛑 全球拦截', type: 'select', proxies: ['REJECT', '🎯 全球直连']}
   - {name: '🐟 漏网之鱼', type: 'select', proxies: ['🚀 节点选择', '🎯 全球直连', '♻️ 自动选择']}
   - {name: '🔍 DNS_OUT', <<: *pr}
-  - {name: '💬 AI', <<: *pr}
-  - {name: 'OpenAI', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/ChatGPT.png'}
-  - {name: 'Google', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Google_Search.png'}
-  - {name: 'Cloudflare@cn', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Cloudflare.png'}
-  - {name: '微软服务', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Microsoft.png'}
-  - {name: 'Telegram', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Telegram.png'}
-  - {name: 'Twitter', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Twitter.png'}
-  - {name: 'Meta', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Facebook.png'}
-  - {name: 'Spotify', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Spotify.png'}
-  - {name: 'Steam@cn', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Game.png'}
-  - {name: 'epicgame', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Epic_Games.png'}
   - {name: '🇯🇵 日本', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)日|jp|japan|🇯🇵', exclude-filter: '^\[自建\]'}
   - {name: '🇸🇬 狮城', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)(新|sg|singapore|狮城|獅城|🇸🇬)', exclude-filter: '^\[自建\]'}
   - {name: '🇭🇰 香港', <<: *url-test, tolerance: 10, include-all-proxies: true, filter: '(?i)港|hk|hongkong|hong kong|🇭🇰', exclude-filter: '^\[自建\]'}
