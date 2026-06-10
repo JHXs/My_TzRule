@@ -60,7 +60,6 @@ rules:
   - DST-PORT,3478,🚀 节点选择
   - DOMAIN-SUFFIX,fedorainfracloud.org,🎯 全球直连
   - DOMAIN-SUFFIX,fedoraproject.org,🎯 全球直连
-  - IP-CIDR,20.205.243.166/32,🎯 全球直连,no-resolve
   - RULE-SET,My_Reject,🛑 全球拦截
   - RULE-SET,My_Proxy,🚀 节点选择
   - RULE-SET,My_Direct,🎯 全球直连
