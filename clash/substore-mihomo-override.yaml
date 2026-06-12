@@ -15,7 +15,7 @@ rule-anchor:
   classical: &classical {type: http, interval: 86400, behavior: classical, format: text}
 
 proxy-groups:
-  - {name: '🚀 节点选择', type: 'select', proxies: ['♻️ 自动选择', '🏗 自建', '🇭🇰 香港-自建', '🇯🇵 日本-自建', '🇸🇬 狮城-自建', '🇺🇲 美国-自建', '🚁 机场自动', '📲 白嫖自动', '🚁 机场', '📲 白嫖', '🇭🇰 香港', '🇯🇵 日本', '🇸🇬 狮城', '🇺🇲 美国', '🇨🇳 台湾', '🇰🇷 韩国', '其它地区', '🎯 全球直连']}
+  - {name: '🚀 节点选择', type: 'select', proxies: ['♻️ 自动选择', '🏗 自建', '🇭🇰 香港-自建', '🇯🇵 日本-自建', '🇸🇬 狮城-自建', '🇺🇲 美国-自建', '🚁 机场自动', '📲 白嫖自动', '🚁 机场', '📲 白嫖', '🇭🇰 香港', '🇯🇵 日本', '🇸🇬 狮城', '🇺🇲 美国', '🇨🇳 台湾', '🇰🇷 韩国', '🇦🇺 澳大利亚-自建', '🇦🇺 澳大利亚', '🇹🇷 土耳其', '其它地区', '🎯 全球直连']}
   - {name: '🏗 自建', type: 'select', include-all-proxies: true, filter: '^\[自建\]', exclude-filter: '^\[自建\]DIRECT-'}
   - {name: 🀄 中转, type: select, proxies: [🚁 机场, 🚁 机场自动, "[自建]🇭🇰 Zouter香港", 📲 白嫖, 📲 白嫖自动, 🇭🇰 香港, 🇸🇬 狮城, 🇺🇲 美国, 🇯🇵 日本, 🇰🇷 韩国, 其它地区]}
   - {name: '💬 AI', <<: *pr}
