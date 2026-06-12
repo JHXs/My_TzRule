@@ -26,7 +26,8 @@ proxy-groups:
   - {name: 'Telegram', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Telegram.png'}
   - {name: 'Twitter', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Twitter.png'}
   - {name: 'Meta', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Facebook.png'}
-  - {name: 'Spotify', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Spotify.png'}
+  # - {name: 'Spotify', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Spotify.png'}
+  - {name: 'Bybit', <<: *pr}
   - {name: 'Steam@cn', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Game.png'}
   - {name: 'epicgame', <<: *pr, icon: 'https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/mini/Epic_Games.png'}
   - {name: '🇯🇵 日本-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(日|jp|japan|🇯🇵)'}
@@ -76,7 +77,8 @@ rules:
   - RULE-SET,meta_domain,Meta
   - RULE-SET,category-ai-chat-!cn,💬 AI
   - RULE-SET,telegram_domain,Telegram
-  - RULE-SET,spotify_domain,Spotify
+  # - RULE-SET,spotify_domain,Spotify
+  - RULE-SET,bybit_domain,Bybit
   - RULE-SET,microsoft_domain,微软服务
   - RULE-SET,github_domain,其它地区
   - RULE-SET,geolocation-!cn,🚀 节点选择
@@ -101,7 +103,8 @@ rule-providers:
   twitter_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs}
   meta_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/meta.mrs}
   google_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs}
-  spotify_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs}
+  # spotify_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs}
+  bybit_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bybit.mrs}
   microsoft_domain: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs}
   steam@cn: {<<: *domain, url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam@cn.mrs}
   epicgame: {<<: *domain, url: https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/epicgames.mrs}
