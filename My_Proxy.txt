@@ -12,7 +12,8 @@ DOMAIN,modelstudio.console.aliyun.com # 全域名匹配
 # DOMAIN,fnalist.hansel.top
 # DOMAIN,qbit.hansel.top
 
-# 长风网站，自动注入
+# 长风网站
+DOMAIN-SUFFIX,nodebuf.com
 DOMAIN-SUFFIX,v2rayse.com
 DOMAIN-SUFFIX,v2rayssr.com
 DOMAIN-SUFFIX,cff.pw
