@@ -7,6 +7,8 @@ DOMAIN-KEYWORD,googleapis.cn
 DOMAIN-KEYWORD,springer.com
 DOMAIN-SUFFIX,z.ai
 DOMAIN,modelstudio.console.aliyun.com # 全域名匹配
+DOMAIN-SUFFIX,okemby.org
+
 # DOMAIN,sun.hansel.top
 # DOMAIN,webdav.hansel.top
 # DOMAIN,fnalist.hansel.top
