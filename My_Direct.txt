@@ -10,7 +10,7 @@ DOMAIN-SUFFIX,801998.xyz
 DOMAIN-SUFFIX,vultr.com
 DOMAIN-SUFFIX,chatopens.chat
 DOMAIN-SUFFIX,kuafuzy.com
-DOMAIN-SUFFIX,agentrouter.org
+# DOMAIN-SUFFIX,agentrouter.org
 DOMAIN-SUFFIX,giffgaff.com
 # DOMAIN-SUFFIX,fedorainfracloud.org
 # DOMAIN-SUFFIX,fedoraproject.org
