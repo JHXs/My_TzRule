@@ -128,6 +128,9 @@ ipv6: true
 allow-lan: true
 authentication:
   - "ikunji:ikunji"
+skip-auth-prefixes:
+  - 127.0.0.0/8
+  - ::1/128
 unified-delay: true
 tcp-concurrent: true
 
@@ -143,6 +146,12 @@ geox-url:
 
 external-controller: 0.0.0.0:8090
 secret: "ikunji"
+external-controller-cors:
+  allow-private-network: true
+  allow-origins:
+    - https://metacubex.github.io
+    - https://board.zash.run.place
+    - http://localhost:8090
 external-ui-url: "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip"
 find-process-mode: strict
 keep-alive-idle: 600
