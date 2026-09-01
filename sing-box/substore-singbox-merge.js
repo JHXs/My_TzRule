@@ -153,7 +153,8 @@ async function main() {
   const artifact = await produceArtifact({
     type,
     name,
-    platform: 'sing-box'
+    platform: 'sing-box',
+    produceType: 'internal'
   });
 
   const produced = normalizeProducedArtifact(artifact);
