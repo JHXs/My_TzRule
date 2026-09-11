@@ -227,8 +227,8 @@ dns:
     "+.lan,+.in-addr.arpa": system
     "rule-set:private_domain,steam@cn,category-games@cn,cn_domain":
       - system # 直连域名走系统DNS
-      - tls://223.5.5.5
-      - 114.114.114.114
+      - 223.5.5.5
+      - 223.6.6.6
     "rule-set:My_Reject,AWAvenue-AD": rcode://success # 广告域名直接返回成功（等于拦截）
   nameserver: # 兜底DNS，用于解析基于IP的规则的域名，即既不在代理域名规则内也不在直连域名规则内的域名
     - '8.8.8.8#🔍 DNS_OUT' # 指定 DNS 过代理查询，🔍 DNS_OUT 为策略组名或节点名
