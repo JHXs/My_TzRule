@@ -35,8 +35,8 @@ proxy-groups:
   - {name: '🇭🇰 香港-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(港|hk|hongkong|hong kong|🇭🇰)'}
   - {name: '🇸🇬 狮城-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(新|sg|singapore|狮城|獅城|🇸🇬)'}
   - {name: '🇦🇺 澳大利亚-自建', type: 'select', include-all-proxies: true, filter: '(?i)^\[自建\].*(澳|au|australia|🇦🇺)'}
-  - {name: '🚁 机场', type: 'select', include-all-proxies: true, filter: '^\[peiqian\]'}
-  - {name: '🚁 机场自动', <<: *url-test, include-all-proxies: true, filter: '^\[peiqian\]'}
+  - {name: '🚁 机场', type: 'select', include-all-proxies: true, filter: '^\[(peiqian|liangxin)\]'}
+  - {name: '🚁 机场自动', <<: *url-test, include-all-proxies: true, filter: '^\[(peiqian|liangxin)\]'}
   - {name: '📲 白嫖', type: 'select', include-all-proxies: true, filter: '^\[ikuuu\]'}
   - {name: '📲 白嫖自动', <<: *url-test, include-all-proxies: true, filter: '^\[ikuuu\]'}
   - {name: '♻️ 自动选择', <<: *url-test, proxies: ['🚁 机场自动', '📲 白嫖自动', '🏗 自建']}
