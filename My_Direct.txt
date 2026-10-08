@@ -27,7 +27,8 @@ PROCESS-NAME,trim-qbittorrent-nox
 PROCESS-NAME,qbittorrent-nox
 PROCESS-NAME,zerotier-one
 # PROCESS-NAME,easytier-core
-PROCESS-NAME,steam-ua-proxy,DIRECT
+PROCESS-NAME,steam-ua-proxy,DIRECT        # Linux
+PROCESS-NAME,steam-ua-proxy.exe,DIRECT    # Windows
 
 # tailscale
 IP-CIDR,100.64.0.0/10
