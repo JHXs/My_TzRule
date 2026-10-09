@@ -21,6 +21,9 @@ DOMAIN,emby.yusen.cc.cd
 # DOMAIN-SUFFIX,fedorainfracloud.org
 # DOMAIN-SUFFIX,fedoraproject.org
 # DOMAIN-SUFFIX,binance.com
+
+DMAIN,api.commandcode.ai
+
 PROCESS-NAME,tailscale.exe
 PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,trim-qbittorrent-nox
