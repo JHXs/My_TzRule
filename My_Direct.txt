@@ -22,7 +22,7 @@ DOMAIN,emby.yusen.cc.cd
 # DOMAIN-SUFFIX,fedoraproject.org
 # DOMAIN-SUFFIX,binance.com
 
-DMAIN,api.commandcode.ai
+DOMAIN,api.commandcode.ai
 
 PROCESS-NAME,tailscale.exe
 PROCESS-NAME,tailscaled.exe
