@@ -27,7 +27,7 @@ PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,trim-qbittorrent-nox
 PROCESS-NAME,qbittorrent-nox
 PROCESS-NAME,zerotier-one
-# PROCESS-NAME,easytier-core
+PROCESS-NAME,easytier-core
 PROCESS-NAME,steam-ua-proxy,DIRECT        # Linux
 PROCESS-NAME,steam-ua-proxy.exe,DIRECT    # Windows
 
